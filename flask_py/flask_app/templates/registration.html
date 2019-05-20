@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+
+<div class="container-fluid">
+<div class="jumbotron text-center">
+  <h1>REGISTER</h1>
+  <form action="/registration" method="POST">
+    <div class="form-group">
+      <label>E-mail</label>
+      <input type="text" name="username" placeholder="Name" class="form-control"  required>
+    </div>
+    <div class="form-group">
+      <label></label>
+      <input type="text" name="reg_number" placeholder="Registration Number" class="form-control"  required>
+    </div>
+    <!-- <div class="form-group">
+        <label>Father's Name</label>
+        <input type="text" name="reg_number" placeholder="Registration Number" class="form-control"  required>
+      </div>
+      <div class="form-group">
+          <label>Mother's Name</label>
+          <input type="text" name="reg_number" placeholder="Registration Number" class="form-control"  required>
+        </div>
+        <div class="form-group">
+            <label>DOB:</label>
+            <input type="date" name="reg_number" placeholder="Registration Number" class="form-control"  required>
+          </div>
+          <div class="form-group">
+            <label>state:</label>
+            
+
+            <select class="form-control" name="country" id="country" onChange="printStateMenu(this.value);">'.
+              '<option> Select Option</option>'.
+              '<option value="ka">Karnataka</option>'.
+              '<option value="mh">Maharashtra</option>'.
+              '<option value="gj">Gujrat</option>'.
+              '<option value="dl">Delhi</option>'.
+              '<option value="uk">Uttrakhand</option>'.
+              '<option value="ga">Goa</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+              <p id="stateSelect"><select name="state" id="state" class="form-control"><option value="Other">Select state...</option></select></p>
+
+            </div> -->
+          <div class="form-group">
+            <input type="text" name="location" placeholder="Your Location" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+</div>
+</div>
+
+
+{% endblock %}
