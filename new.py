@@ -15,22 +15,27 @@ def signIn():
     return render_template('login.html',text=text)
 
 # authenticate user and display its details
-@app.route('/showDetails')
-def showDetails():
+@app.route('/showDetails',methods=['POST','GET'])
+def details():
     if request.method == 'POST':
         currentUsername = request.form['username']
         password = request.form['password']
         # logic to check data for user
         # if file present then display details else display error
-        f = open('allUsers.','r')
+        f = open('allUsers.txt','r')
+        found = 0
         for line in f:
-            userAndPass = line.split(',')
-            username = userAndPass[0]
-            if(username == currentUser):
-                return render_template('diplayDetails.html',)
-            else:
-                return render_template('welcome.html')
-
+            userDetails = line.split('/')
+            username = userDetails[0]
+            userpassword = userDetails[1]
+            # user = userDetails[2]
+            if(username == currentUsername and password == userpassword):
+                found = 1
+        if found == 1 :
+            return render_template('diplayDetails.html',userDetails = userDetails)
+        else:
+            return render_template('welcome.html',text = 'Please input correct usernanme or password')    
+            
 
 
 # ----------------------------------------------------------------------------------
@@ -79,7 +84,7 @@ def about():
 #             return render_template('login.html',text=text)  
 
 
-@app.route('/registered',methods=['POST','GET'])
+@app.route('/register',methods=['POST','GET'])
 def filedata():           
     if request.method == 'POST':
         # flag='n'
@@ -95,10 +100,13 @@ def filedata():
         #         f1.close()
         username = request.form['username']
         password = request.form['password']
-        fnew=open(username+".txt",'a')
-        fnew.close()    
-        user=request.form['user']
-        policies = request.form['policy']
+        # fnew=open(username+".txt",'a')
+        # fnew.close()    
+        # user=request.form['user']
+        policy = request.form.getlist('policy[]')
+        print(policy)
+        policies = ','.join(policy)
+        print(policies,"^^^^^^^^^^^^^^")
         accountType = request.form['accountType']
         candidatename = request.form['candidatename']
         fathername= request.form['fathername']
@@ -111,14 +119,19 @@ def filedata():
         month = request.form['month']
         year = request.form['year']
         location = request.form['location']
-        f=open(user+".txt",'a')
-        f.write(password+"/"+candidatename+"/"+fathername+"/"
-        +mothername+"/"+email+"/"+mobno+"/"+gender+"/"+maritalstatus+"/"+day
-        +"/"+month+"/"+year+"/"+location+"/"+policy)
+        # f=open(user+".txt",'a')
         f=open("allUsers.txt",'a')
-        f.write(username+','+password)
-        return render_template('registred.html',user=user,accountType=accountType)
-
+        f.write(username+'/'+password+"/"+candidatename+"/"+fathername+"/"
+        +mothername+"/"+email+"/"+mobno+"/"+gender+"/"+maritalstatus+"/"+day
+        +"/"+month+"/"+year+"/"+location+"/"+policies)
+        f.write("\n")
+        f.close()
+        # print(f,"^^^^^file content")
+        # f1=open("allUsers.txt",'a')
+        # f1.write(username+','+password+','+user)
+        # f1.close()
+        return render_template('registred.html',user=candidatename,accountType=accountType)
+        
 
 
 
