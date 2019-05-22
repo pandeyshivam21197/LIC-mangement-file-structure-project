@@ -17,6 +17,10 @@
 </head>
 
 <body>
+    <div class="jumbotron" id="showSearch">
+        <input type="text" name="searchedUsers">
+        <a class="btn btn-primary" href="/showUsers" type="button">Search</a>
+    </div>
     <table class="table table-dark">
         <thead>
             <tr>
@@ -63,11 +67,17 @@
             <p id="aboutPolicy"></p>
         </tbody>
     </table>
+    <div class="alignCenter">
+        <a class="btn btn-primary" href="/signIn" type="button">Logout</a>
+    </div>
     <style>
-        tr{
+        tr .alignCenter {
             text-align: center;
         }
     </style>
 </body>
+<script>
+
+</script>
 
 </html>
