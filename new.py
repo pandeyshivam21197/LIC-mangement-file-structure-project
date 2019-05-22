@@ -28,11 +28,16 @@ def details():
             userDetails = line.split('/')
             username = userDetails[0]
             userpassword = userDetails[1]
-            # user = userDetails[2]
+            user = userDetails[2]
+            # print(len(userDetails[13].split(',')))
+            if len(userDetails[13].split(',')) == 1 :
+                policyDetails = "LIC Jeevan Anand - Key Features The plan offers bonus declarations to enhance the benefits that are payable. You have to pay the premium for the complete plan duration It comes along with an additional Accidental Death and Disability Benefit Rider that offers additional benefit in case of accidental death or disability.  Loans can be taken under the plan if the plan acquires a Surrender Value.  Rebates in premiums are allowed for choosing a high level of Sum Assured and also for paying premiums annually or semi-annually. "
+            else :
+                policyDetails = "LIC Jeevan Anand - Key Features The plan offers bonus declarations to enhance the benefits that are payable. You have to pay the premium for the complete plan duration It comes along with an additional Accidental Death and Disability Benefit Rider that offers additional benefit in case of accidental death or disability.  Loans can be taken under the plan if the plan acquires a Surrender Value.  Rebates in premiums are allowed for choosing a high level of Sum Assured and also for paying premiums annually or semi-annually. LIC Jeevan saral - Key Features Premium is chosen by the policyholder and Sum Assured is 250 times the Monthly Premium amount. Death Benefit is Sum Assured + Return of premiums excluding extra/rider premium and first year premium + Loyalty Addition. Maturity Benefit is Maturity Sum Assured + Loyalty Additions, if any. Partial surrender of the policy is allowed after the 3rd policy year."
             if(username == currentUsername and password == userpassword):
                 found = 1
         if found == 1 :
-            return render_template('diplayDetails.html',userDetails = userDetails)
+            return render_template('diplayDetails.html',userDetails = userDetails,policyDetails = policyDetails)
         else:
             return render_template('welcome.html',text = 'Please input correct usernanme or password')    
             
@@ -106,7 +111,7 @@ def filedata():
         policy = request.form.getlist('policy[]')
         print(policy)
         policies = ','.join(policy)
-        print(policies,"^^^^^^^^^^^^^^")
+        # print(policies,"^^^^^^^^^^^^^^")
         accountType = request.form['accountType']
         candidatename = request.form['candidatename']
         fathername= request.form['fathername']
@@ -121,17 +126,28 @@ def filedata():
         location = request.form['location']
         # f=open(user+".txt",'a')
         f=open("allUsers.txt",'a')
-        f.write(username+'/'+password+"/"+candidatename+"/"+fathername+"/"
-        +mothername+"/"+email+"/"+mobno+"/"+gender+"/"+maritalstatus+"/"+day
-        +"/"+month+"/"+year+"/"+location+"/"+policies)
-        f.write("\n")
-        f.close()
-        # print(f,"^^^^^file content")
-        # f1=open("allUsers.txt",'a')
-        # f1.write(username+','+password+','+user)
-        # f1.close()
-        return render_template('registred.html',user=candidatename,accountType=accountType)
-        
+        f1 = open('allUsers.txt','r')
+        # found = 0
+        for line in f1:
+            userDetails = line.split('/')
+            if(userDetails[0] == username):
+                found = 1
+            else :
+                found = 0
+        f1.close()
+        if found == 0:
+            f.write(username+'/'+password+"/"+candidatename+"/"+fathername+"/"
+            +mothername+"/"+email+"/"+mobno+"/"+gender+"/"+maritalstatus+"/"+day
+            +"/"+month+"/"+year+"/"+location+"/"+policies)
+            f.write("\n")
+            f.close()
+            # print(f,"^^^^^file content")
+            # f1=open("allUsers.txt",'a')
+            # f1.write(username+','+password+','+user)
+            # f1.close()
+            return render_template('registred.html',user=candidatename,accountType=accountType)
+        else:
+            return render_template('details.html')
 
 
 
