@@ -35,88 +35,47 @@
                 </li>
             </ul>
         </div>
-        <form class="form-inline my-2 my-lg-0" action="/showUsers" id="searchUsers" method="POST">
-            <input name ="searchPolicy" class="form-control mr-sm-2" type="search" placeholder="Enter Policy Name" aria-label="Search">
+        <form method ="POST" class="form-inline my-2 my-lg-0" action="/showUers" id="searchUsers">
+            <input name="searchPolicy" class="form-control mr-sm-2" type="search" placeholder="Enter Policy Name"
+                aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </nav>
-
+    {% if allUsers|length == 0 %}
     <table class="table table-dark">
         <thead>
             <tr>
-                <td scope="col">Welcome {{userDetails[2]}}</th>
+                <th>No Users Found</th>
+            </tr>
+        </thead>
+    </table>
+    {% else %}
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>Users with policy - {{policy}}</th>
             </tr>
         </thead>
         <tbody>
+            {% for user in allUsers %}
             <tr>
-                <th scope="row">Father's Name:</th>
-                <td>{{userDetails[3]}}</td>
+                <th scope="row" class="alignStart">{{user[2]}}</th>
+                <td class="alignMiddle">{{user[3]}}</td>
+                <td class="alignMiddle">{{user[4]}}</td>
             </tr>
-            <tr>
-                <th scope="row">Mother's Name:</th>
-                <td>{{userDetails[4]}}</td>
-            </tr>
-            <tr>
-                <th scope="row">Email:</th>
-                <td>{{userDetails[5]}}</td>
-            </tr>
-            <tr>
-                <th scope="row">Mobile Number:</th>
-                <td>{{userDetails[6]}}</td>
-            </tr>
-            <tr>
-                <th scope="row">Gender :</th>
-                <td>{{userDetails[7]}}</td>
-            </tr>
-            <tr>
-                <th scope="row">Marital Status :</th>
-                <td>{{userDetails[8]}}</td>
-            </tr>
-            <tr>
-                <th scope="row">Date Of Birth:</th>
-                <td>{{userDetails[9]}} / {{userDetails[10]}} / {{userDetails[11]}}</td>
-            </tr>
-            <tr>
-                <th scope="row">Location :</th>
-                <td>{{userDetails[12]}}</td>
-            </tr>
-            <tr>
-                <th scope="row">Policies :</th>
-                <td>{{userDetails[13]}}</td>
-            </tr>
-            <p id="aboutPolicy"></p>
+            {% endfor %}
         </tbody>
-
     </table>
-    <div class="jumbotron">
-        <p>{{policyDetails}}</p>
-    </div>
+    {% endif %}
+    <ul>
+        {% for row in rows %}
+        <li class="{{ loop.cycle('odd', 'even') }}">{{ row }}</li>
+        {% endfor %}
+    </ul>
     <div class="alignCenter">
         <a class="btn btn-primary" href="/signIn" type="button">Logout</a>
     </div>
-    <style>
-        tr,
-        .alignCenter {
-            text-align: center;
-        }
 
-        .alignEnd {
-            text-align: end;
-        }
-
-        #searchUsers {
-            display: none;
-        }
-    </style>
 </body>
-<script>
-
-    username = "{{userDetails[0]}}";
-    console.log(username)
-    if (username == "Admin@123") {
-        document.getElementById('searchUsers').style.display = "inline";
-    }
-
-</script>
 
 </html>
